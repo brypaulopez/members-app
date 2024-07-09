@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Avatar, Button, Card, Text, TextInput, Container } from 'react-native-paper';
 
-const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
+const LeftContent = props => <Avatar.Icon {...props} icon="map-marker" />
 
 function AddressInfo({route, navigation}){
         const {fname, mname, lname, contactTelephone, contactCellphone, contactEmail} = route.params;
@@ -38,6 +38,12 @@ function AddressInfo({route, navigation}){
           };
         return (
             <View style={styles.container}>
+                <Card>
+                    <Card.Title left={LeftContent} />
+                    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                    <Card.Actions>
+                    </Card.Actions>
+                </Card>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (

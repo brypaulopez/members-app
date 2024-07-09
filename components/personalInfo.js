@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Avatar, Button, Card, Text, TextInput, Container } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const LeftContent = props => <Avatar.Icon {...props} icon="camera" />
+const LeftContent = props => <Avatar.Icon {...props} icon="account-box" />
 
 function PersonalInfo({navigation}){
         const [fname, setfName] = useState("");
