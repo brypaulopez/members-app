@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import Constants from 'expo-constants';
 import ContactInfo from './contactInfo';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Avatar, Button, Card, Text, TextInput, Container } from 'react-native-paper';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-export const PersonalInfo = (props) => {
+const LeftContent = props => <Avatar.Icon {...props} icon="camera" />
+
+function PersonalInfo({navigation}){
         const [fname, setfName] = useState("");
         const [mname, setmName] = useState("");
         const [lname, setlName] = useState("");
@@ -32,36 +38,45 @@ export const PersonalInfo = (props) => {
         });
         return (
             <View style={styles.container}>
-                <Text style={styles.label}>First name</Text>
+                 <Card>
+                    <Card.Title left={LeftContent} />
+                    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                    <Card.Actions>
+                    </Card.Actions>
+                </Card>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            style={styles.input}
+                            style={{marginTop: 20}}
+                            mode='outlined'
+                            label='First Name'
                             onBlur={onBlur}
                             onChangeText={(text)=>setfName(text)}
                         />
                     )}
                     name="firstName"
                     rules={{ required: true }} />
-                <Text style={styles.label}>Middle name</Text>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            style={styles.input}
+                            style={{marginTop: 20}}
+                            mode='outlined'
+                            label='Middle Name'
                             onBlur={onBlur}
                             onChangeText={(text)=>setmName(text)}
                             />
                     )}
                     name="middleName"
                     rules={{ required: true }} />
-                <Text style={styles.label}>Last name</Text>
                 <Controller
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            style={styles.input}
+                            style={{marginTop: 20}}
+                            mode='outlined'
+                            label='Last Name'
                             onBlur={onBlur}
                             onChangeText={(text)=>setlName(text)}
                             />
@@ -69,18 +84,17 @@ export const PersonalInfo = (props) => {
                     name="lastName"
                     rules={{ required: true }} />
 
-                <View style={styles.button}>
-                    <Button
-                        style={styles.button}
-                        title="Go to Contact Information"
-                        onPress={() => props.navigation.navigate("Address", 
-                            {
+                    <View style={styles.button}>
+                        <Button
+                            mode="contained"
+                            onPress={() => navigation.navigate('Contact', {
                                 fname,
                                 mname,
-                                lname
-                            }
-                        )} />
-                </View>
+                                lname,
+                            })}>
+                            Go to Contact Info
+                        </Button>
+                    </View>
             </View>
         )
     }
@@ -93,9 +107,8 @@ export const PersonalInfo = (props) => {
         },
         button: {
           marginTop: 40,
-          color: '#a9c0c1',
+          color: 'black',
           height: 40,
-          backgroundColor: '#3e824e',
           borderRadius: 4,
         },
         container: {
@@ -103,14 +116,7 @@ export const PersonalInfo = (props) => {
           justifyContent: 'center',
           paddingTop: Constants.statusBarHeight,
           padding: 8,
-          backgroundColor: '#cec9c7',
-        },
-        input: {
-          backgroundColor: 'white',
-          borderColor: '#afaa9e',
-          borderWidth: 3,
-          height: 40,
-          padding: 10,
-          borderRadius: 4,
+          backgroundColor: '#EBEDF0',
         },
       });
+    export default PersonalInfo;

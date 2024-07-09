@@ -5,22 +5,44 @@ import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ContactInfo from './components/contactInfo';
-import { PersonalInfo } from './components/personalInfo';
-import { AddressInfo } from './components/addresInfo';
-
+import PersonalInfo from './components/personalInfo';
+import AddressInfo from './components/addresInfo';
+import { DefaultTheme, PaperProvider } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'black',
+  },
+};
+
 export default function App() {
-  const PersonalInfos = PersonalInfo();
-  const AddressInfos = AddressInfo();
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Personal' component={PersonalInfos} />
-        <Stack.Screen name='Contact' component={ContactInfo} />
-        <Stack.Screen name='Address' component={AddressInfos} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='Personal' component={PersonalInfo} options={{
+            headerStyle: {
+              backgroundColor: 'tomato',
+            },
+          }}/>
+          <Stack.Screen name='Contact' component={ContactInfo} options={{
+            headerStyle: {
+              backgroundColor: 'tomato',
+            },
+          }}/>
+          <Stack.Screen name='Address' component={AddressInfo} options={{
+            headerStyle: {
+              backgroundColor: 'tomato',
+            },
+          }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 

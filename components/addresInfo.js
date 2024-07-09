@@ -1,93 +1,96 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+import { useState } from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import Constants from 'expo-constants';
-import PersonalInfo from './personalInfo';
+import ContactInfo from './contactInfo';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Avatar, Button, Card, Text, TextInput, Container } from 'react-native-paper';
 
-export const AddressInfo=(props)=>{
-    const {fname, mname, lname} = props.route.params;
-    const { register, setValue, handleSubmit, control, formState: { errors } } = useForm({
-        defaultValues: {
-          firstName: {fname},
-          lastName: {lname},
-          middleName: {mname},
-          birthDate: '',
-          gender: '',
-          contactTelephone: '',
-          contactCellphone: '',
-          contactEmail: '',
-          civilStatus: '',
-          unitAddress: '',
-          street: '',
-          barangay: '',
-          municipality: '',
-          city: '',
-          province: '',
-          zipcode: '',
-          region: ''
-        }
-      });
-      const handleClick = () => {
-        handleSubmit(onSubmit);
-      }
-      const onSubmit = data => {
-        console.log(data);
-      };
-    return (
-        <View style={styles.container}>
-        <Text style={styles.label}>Municipality</Text>
-        <Controller
-            control={control}
-            render={({field: { onChange, onBlur, value }}) => (
-            <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-            />
-            )}
-            name="municipality"
-            rules={{ required: true }}
-        />
-        <Text style={styles.label}>City</Text>
-        <Controller
-            control={control}
-            render={({field: { onChange, onBlur, value }}) => (
-            <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={firstName}
-            />
-            )}
-            name="city"
-            rules={{ required: true }}
-        />
-        <Text style={styles.label}>Region</Text>
-        <Controller
-            control={control}
-            render={({field: { onChange, onBlur, value }}) => (
-            <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-            />
-            )}
-            name="region"
-            rules={{ required: true }}
-        />
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
-        <View style={styles.button}>
-            <Button
-            style={styles.button}
-            title="Go to Personal Information"
-            onPress={handleSubmit(onSubmit)}
-            />
-        </View>
-        </View>
-        );
-    };
+function AddressInfo({route, navigation}){
+        const {fname, mname, lname, contactTelephone, contactCellphone, contactEmail} = route.params;
+        const { register, setValue, handleSubmit, control, formState: { errors } } = useForm({
+            defaultValues: {
+                firstName: fname,
+                lastName: mname,
+                middleName: lname,
+                birthDate: '',
+                gender: '',
+                contactTelephone: contactTelephone,
+                contactCellphone: contactCellphone,
+                contactEmail: contactEmail,
+                civilStatus: '',
+                unitAddress: '',
+                street: '',
+                barangay: '',
+                municipality: '',
+                city: '',
+                province: '',
+                zipcode: '',
+                region: ''
+            }
+        });
+        const onSubmit = data => {
+            console.warn(data);
+          };
+        return (
+            <View style={styles.container}>
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={{marginTop: 20}}
+                            mode='outlined'
+                            label='Municipality'
+                            onBlur={onBlur}
+                            onChangeText={value => onChange(value)}
+                            value={value}
+                        />
+                    )}
+                    name="municipality"
+                    rules={{ required: true }} />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={{marginTop: 20}}
+                            mode='outlined'
+                            label='Region'
+                            onBlur={onBlur}
+                            onChangeText={value => onChange(value)}
+                            value={value}
+                            />
+                    )}
+                    name="region"
+                    rules={{ required: true }} />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={{marginTop: 20}}
+                            label='City'
+                            mode='outlined'
+                            onBlur={onBlur}
+                            onChangeText={value => onChange(value)}
+                            value={value}
+                            />
+                    )}
+                    name="city"
+                    rules={{ required: true }} />
+
+                    <View style={styles.button}>
+                        <Button
+                            mode="contained"
+                            onPress={handleSubmit(onSubmit)}>
+                            Submit
+                        </Button>
+                    </View>
+            </View>
+        )
+    }
 
     const styles = StyleSheet.create({
         label: {
@@ -97,9 +100,8 @@ export const AddressInfo=(props)=>{
         },
         button: {
           marginTop: 40,
-          color: '#a9c0c1',
+          color: 'black',
           height: 40,
-          backgroundColor: '#3e824e',
           borderRadius: 4,
         },
         container: {
@@ -107,14 +109,7 @@ export const AddressInfo=(props)=>{
           justifyContent: 'center',
           paddingTop: Constants.statusBarHeight,
           padding: 8,
-          backgroundColor: '#cec9c7',
-        },
-        input: {
-          backgroundColor: 'white',
-          borderColor: '#afaa9e',
-          borderWidth: 3,
-          height: 40,
-          padding: 10,
-          borderRadius: 4,
+          backgroundColor: '#EBEDF0',
         },
       });
+    export default AddressInfo;
